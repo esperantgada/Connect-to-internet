@@ -23,7 +23,7 @@
     <data>
         <variable
             name="photo"
-            type="com.example.android.marsphotos.network.MarsPhotos" />
+            type="com.example.android.marsphotos.network.MarsPhoto" />
     </data>
 
     <ImageView
@@ -31,8 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="170dp"
         android:scaleType="fitXY"
+        app:imageUrl="@{photo.imageSrcUrl}"
         android:adjustViewBounds="true"
-        app:imageUrl="@{photo.imgSrcUrl}"
         android:padding="2dp"
         tools:src="@tools:sample/backgrounds/scenic"/>
 </layout>

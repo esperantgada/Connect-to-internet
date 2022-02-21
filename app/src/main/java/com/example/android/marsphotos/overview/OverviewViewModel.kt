@@ -21,11 +21,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.marsphotos.network.MarsApi
-import com.example.android.marsphotos.network.MarsApiService
-import com.example.android.marsphotos.network.MarsPhotos
+import com.example.android.marsphotos.network.MarsPhoto
 import kotlinx.coroutines.launch
 
-enum class MarsApiStatus{LOADING, ERROR, DONE}
+enum class MarsApiStatus{ LOADING, ERROR, DONE }
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -35,12 +34,16 @@ class OverviewViewModel : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<MarsApiStatus>()
 
-    //MutableLiveData to store the list of photos
-    private val _photos = MutableLiveData<List<MarsPhotos>>()
-    val photos : LiveData<List<MarsPhotos>> = _photos
-
     // The external immutable LiveData for the request status
     val status: LiveData<MarsApiStatus> = _status
+
+    //External immutable LiveData for photos
+    private val _photos = MutableLiveData<List<MarsPhoto>>()
+
+    //External immutable LiveData for photos
+    val photos : LiveData<List<MarsPhoto>> = _photos
+
+
     /**
      * Call getMarsPhotos() on init so we can display status immediately.
      */
@@ -54,16 +57,13 @@ class OverviewViewModel : ViewModel() {
      */
     private fun getMarsPhotos() {
         viewModelScope.launch {
-
-            _status.value = MarsApiStatus.LOADING
-            try {
-                _photos.value = MarsApi.retrofitService.getPhotos()
-                _status.value = MarsApiStatus.DONE
-                //_status.value = "First Mars image retrieved URL:  ${_photos.value!!.imgSrcUrl} "
-            }catch(e : Exception){
-                _status.value = MarsApiStatus.ERROR
-                _photos.value = listOf()
-            }
+           try {
+               _photos.value = MarsApi.retrofitService.getPhotos()
+               _status.value = MarsApiStatus.DONE
+           }catch (e : Exception){
+               _status.value = MarsApiStatus.ERROR
+               _photos.value = listOf()
+           }
         }
     }
 }

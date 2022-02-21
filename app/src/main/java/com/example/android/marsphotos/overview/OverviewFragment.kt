@@ -42,15 +42,13 @@ class OverviewFragment : Fragment() {
     ): View? {
         val binding = FragmentOverviewBinding.inflate(inflater)
 
-        //val binding = GridViewItemBinding.inflate(inflater)
-
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
+        binding.recyclerView.adapter = MarsPhotoAdapter()
+
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
-
-        binding.photoGrid.adapter = PhotoGridAdapter()
 
         return binding.root
     }

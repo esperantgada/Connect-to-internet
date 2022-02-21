@@ -17,4 +17,5 @@
 
 <resources>
     <string name="app_name">Mars Photos</string>
+    <string name="error_image">Error image</string>
 </resources>
